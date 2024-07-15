@@ -24,6 +24,12 @@ public class ProductServiceImpl implements ProductService {
     @Autowired
     private QuantityRepository quantityRepository;
 
+    public List<ProductDTO> getAllProducts() {
+        return productRepository.findAll().stream()
+                .map(ProductMapper::toProductDTO)
+                .collect(Collectors.toList());
+    }
+
     public ProductDTO createProduct(ProductDTO productDTO) {
         ProductEntity productEntity = ProductMapper.toProductEntity(productDTO, List.of());
         ProductEntity savedProduct = productRepository.save(productEntity);
